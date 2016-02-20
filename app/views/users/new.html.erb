@@ -1,0 +1,13 @@
+<%= form_for(@user) do |f| %>
+  <ul>
+    <%= f.label :name, value: "User name:" %>
+    <%= f.text_field :name %>
+  </ul>
+
+  <ul>
+    <%= f.label :email, value: "Email:" %>
+    <%= f.email_field :email %>
+  </ul>
+
+  <ul><%= f.submit "Sign up" %></ul>
+<% end %>

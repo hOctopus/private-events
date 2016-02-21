@@ -16,6 +16,9 @@ class UsersController < ApplicationController
   end
 
   def show
+    unless signed_in?
+      redirect_to signin_path
+    end
   end
 
   private

@@ -1,0 +1,19 @@
+<%= form_for(@event) do |f| %>
+  <ul>
+    <%= f.label :date, value: "Date:" %>
+    <%= f.date_field :date %>
+  </ul>
+
+  <ul>
+    <%= f.label :location, value: "Location:" %>
+    <%= f.text_field :location %>
+  </ul>
+
+  <ul>
+    <%= f.label :description, value: "Description:" %>
+    <%= f.text_field :description %>
+  </ul>
+
+  <ul><%= f.submit "Create event" %></ul>
+<% end %>
+<%= link_to "Back", current_user %>

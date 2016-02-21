@@ -1,4 +1,12 @@
-<% if signed_in? %>
-  <ul><%= current_user.name %></ul>
-  <ul><%= link_to "Sign out", signout_path, method: :delete %></ul>
+<ul><%= current_user.name %></ul>
+<ul>Created events: <%= current_user.events.count %></ul>
+<% current_user.events.each do |event| %>
+  <ul>
+    <li>Date: <%= event.date %></li>
+    <li>Location: <%= event.location %></li>
+    <li>Description: <%= event.description %></li>
+  </ul>
 <% end %>
+<ul><%= link_to "Create new event", new_event_path %></ul>
+<ul><%= link_to "Sign out", signout_path, method: :delete %></ul>
+<%= link_to "See all events", root_url %>

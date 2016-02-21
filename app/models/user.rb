@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  has_many :events, :foreign_key => "creator_id"
+
   before_save { self.email = email.downcase }
   before_create :remember
   validates :name,  presence: true, length: { maximum: 50 }

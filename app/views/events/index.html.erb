@@ -1,10 +1,37 @@
-<% @events.each do |event| %>
-  <ul>
-    <li>Date: <%= event.date %></li>
-    <li>Location: <%= event.location %></li>
-    <li>Description: <%= event.description %></li>
-  </ul>
-<% end %>
+<div class="past">
+  <h1>Past Events</h1>
+  <% @past_events.each do |event| %>
+    <ul>
+      <li>Title: <%= event.title %>
+      <li>Date: <%= event.date %></li>
+      <li>Location: <%= event.location %></li>
+      <li>Description: <%= event.description %></li>
+      <li>Created by: <%= event.creator.name %></li>
+      <li>Attended: <%= event.attended?(current_user) ? "Yes" : "No" %></li>
+    </ul>
+  <% end %>
+</div>
+<div class="future">
+  <h1>Future Events</h1>
+  <% @future_events.each do |event| %>
+    <ul>
+      <li>Title: <%= event.title %>
+      <li>Date: <%= event.date %></li>
+      <li>Location: <%= event.location %></li>
+      <li>Description: <%= event.description %></li>
+      <li>Created by: <%= event.creator.name %></li>
+      <li>
+        <% if event.attended?(current_user) %>
+          You are attending this event!
+        <% else %>
+          Attend this event?
+          <%= submit_tag "OK", action: event.attend_event(current_user.id) %>
+          <!-- action works but page does not refresh -->
+        <% end %>
+      </li>
+    </ul>
+  <% end %>
+</div>
 <% if signed_in? %>
   <%= link_to "User profile", current_user %>
 <% end %>

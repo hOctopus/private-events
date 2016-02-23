@@ -1,5 +1,9 @@
 <%= form_for(@event) do |f| %>
   <ul>
+    <%= f.label :title, value: "Event name:" %>
+    <%= f.text_field :title %>
+  </ul>
+  <ul>
     <%= f.label :date, value: "Date:" %>
     <%= f.date_field :date %>
   </ul>

@@ -8,6 +8,7 @@ class EventsController < ApplicationController
   def create
     @event = current_user.events.build(event_params)
     if @event.save
+      @event.attend_event(@event.creator)
       flash[:success] = "Event created!"
       redirect_to current_user
     else
@@ -17,10 +18,11 @@ class EventsController < ApplicationController
 
   def index
     if signed_in?
-      @events = Event.all
+      @past_events = Event.past
+      @future_events = Event.future
     else
       redirect_to signin_path
-    end 
+    end
   end
 
   def show
@@ -29,6 +31,6 @@ class EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:description, :location, :date)
+      params.require(:event).permit(:title, :description, :location, :date)
     end
 end

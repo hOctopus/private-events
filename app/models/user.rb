@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
-  has_many :events, :foreign_key => "creator_id"
+  has_many :events, foreign_key: "creator_id"
+  has_many :invites, foreign_key: "attendees_id"
+  has_many :attended_events, through: :invites
 
   before_save { self.email = email.downcase }
   before_create :remember
@@ -19,5 +21,11 @@ class User < ActiveRecord::Base
 
   def remember
     self.remember_token = User.digest(User.new_token)
+  end
+
+  def previous
+  end
+
+  def upcoming
   end
 end

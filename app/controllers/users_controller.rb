@@ -18,6 +18,11 @@ class UsersController < ApplicationController
   def show
     unless signed_in?
       redirect_to signin_path
+    else
+      @user_events = Event.where(["creator_id = ?", current_user.id])
+                          .order(date: :desc)
+                          .paginate(page: params[:page], per_page: 3)
+
     end
   end
 

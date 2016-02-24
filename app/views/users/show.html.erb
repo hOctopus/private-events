@@ -1,12 +1,14 @@
-<ul><%= current_user.name %></ul>
-<ul>Created events: <%= current_user.events.count %></ul>
-<% current_user.events.each do |event| %>
+<h1>Events <%= current_user.name %> planned</h1>
+<ul>Created events: <%= @user_events.count %></ul>
+<% @user_events.each do |event| %>
   <ul>
+    <li>Title: <%= event.title %></li>
     <li>Date: <%= event.date %></li>
     <li>Location: <%= event.location %></li>
     <li>Description: <%= event.description %></li>
   </ul>
 <% end %>
+<%= will_paginate @user_events %>
 <ul><%= link_to "Create new event", new_event_path %></ul>
 <ul><%= link_to "Sign out", signout_path, method: :delete %></ul>
 <%= link_to "See all events", root_url %>

@@ -1,4 +1,3 @@
-
 <div class="past">
   <h1>Past Events</h1>
   <% @past_events.each do |event| %>
@@ -24,10 +23,17 @@
       <li>Created by: <%= event.creator.name %></li>
       <li>
         <% if event.attended?(current_user) %>
-          You are attending this event!
+          You are attending this event<%= " as the event planner" if event.creator_id == current_user.id %>!
+          <br>Do you no longer wish to attend?
+          <%= form_tag(url_for(controller: "events", action: "declining"),
+                              method: "post") do %>
+            <%= hidden_field_tag 'event_id', event.id %>
+            <%= submit_tag "OK", data: { confirm: "Are you sure?" } %>
+          <% end %>
         <% else %>
           Attend this event?
-         <%= form_tag(url_for(controller: "events", action: "attending"), method: "post") do %>
+         <%= form_tag(url_for(controller: "events", action: "attending"),
+                              method: "post") do %>
             <%= hidden_field_tag 'event_id', event.id %>
             <%= submit_tag "OK" %>
           <% end %>

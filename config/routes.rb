@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   resources :events do
     post :attending, on: :collection
+    post :declining, on: :collection
   end
 end

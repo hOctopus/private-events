@@ -5,11 +5,11 @@ class Event < ActiveRecord::Base
   has_many :attendees, through: :invites
 
   def self.past
-    Event.where(["date < ?", Time.now])
+    Event.where(["date < ?", Date.today])
   end
 
   def self.future
-    Event.where(["date >= ?", Time.now])
+    Event.where(["date >= ?", Date.today])
   end
 
   def attended?(user)
@@ -19,5 +19,10 @@ class Event < ActiveRecord::Base
   def attend_event(user_id)
     user = User.find_by(id: user_id)
     self.attendees.push(user)
+  end
+
+  def decline_event(user_id)
+    user = User.find_by(id: user_id)
+    self.attendees.delete(user)
   end
 end

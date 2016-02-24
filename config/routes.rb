@@ -7,10 +7,9 @@ Rails.application.routes.draw do
   delete  'signout'  => 'sessions#destroy'
 
   resources :users
-  resources :events, only: [:new, :create, :index, :show]
+#  resources :events, only: [:new, :create, :index, :show]
 
-#  resources :events do
-#    post :attend_event, on: :collection
-#  end
-### testing custom routes to solve submit/refresh issue
+  resources :events do
+    post :attending, on: :collection
+  end
 end

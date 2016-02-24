@@ -1,3 +1,4 @@
+
 <div class="past">
   <h1>Past Events</h1>
   <% @past_events.each do |event| %>
@@ -10,6 +11,7 @@
       <li>Attended: <%= event.attended?(current_user) ? "Yes" : "No" %></li>
     </ul>
   <% end %>
+  <%= will_paginate @past_events %>
 </div>
 <div class="future">
   <h1>Future Events</h1>
@@ -25,13 +27,17 @@
           You are attending this event!
         <% else %>
           Attend this event?
-          <%= submit_tag "OK", action: event.attend_event(current_user.id) %>
-          <!-- action works but page does not refresh -->
+         <%= form_tag(url_for(controller: "events", action: "attending"), method: "post") do %>
+            <%= hidden_field_tag 'event_id', event.id %>
+            <%= submit_tag "OK" %>
+          <% end %>
         <% end %>
       </li>
     </ul>
   <% end %>
+  <%= will_paginate @future_events %>
 </div>
+</br>
 <% if signed_in? %>
   <%= link_to "User profile", current_user %>
 <% end %>

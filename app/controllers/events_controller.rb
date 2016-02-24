@@ -8,7 +8,7 @@ class EventsController < ApplicationController
   def create
     @event = current_user.events.build(event_params)
     if @event.save
-      @event.attend_event(@event.creator)
+#      @event.attend_event(@event.creator)
       flash[:success] = "Event created!"
       redirect_to current_user
     else
@@ -18,14 +18,20 @@ class EventsController < ApplicationController
 
   def index
     if signed_in?
-      @past_events = Event.past
-      @future_events = Event.future
+      @past_events = Event.past.order(created_at: :desc).paginate(page: params[:page], per_page: 3)
+      @future_events = Event.future.order(created_at: :desc).paginate(page: params[:page], per_page: 3)
     else
       redirect_to signin_path
     end
   end
 
   def show
+  end
+
+  def attending
+    event = Event.find_by_id(params[:event_id])
+    event.attend_event(current_user.id)
+    redirect_to root_url
   end
 
   private

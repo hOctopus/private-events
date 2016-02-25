@@ -28,19 +28,21 @@ class EventsController < ApplicationController
   end
 
   def show
+    @event = Event.find_by_id(params[:id])
+    @guest_list = @event.attendees
   end
 
   def attending
-    event = Event.find_by_id(params[:event_id])
-    event.attend_event(current_user.id)
-    flash[:success] = "You are attending #{event.title}!"
+    @event = Event.find_by_id(params[:event_id])
+    @event.attend_event(current_user.id)
+    flash[:success] = "You are attending #{@event.title}!"
     redirect_to root_url
   end
 
   def declining
-    event = Event.find_by_id(params[:event_id])
-    event.decline_event(current_user.id)
-    flash[:success] = "You are no longer attending #{event.title}!"
+    @event = Event.find_by_id(params[:event_id])
+    @event.decline_event(current_user.id)
+    flash[:success] = "You are no longer attending #{@event.title}!"
     redirect_to root_url
   end
 

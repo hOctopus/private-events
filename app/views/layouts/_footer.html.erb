@@ -1,0 +1,8 @@
+</br>
+<div class="menu">
+  <ul>
+    <% if signed_in? %>
+      <li><%= link_to "Sign out", signout_path, method: :delete %></li>
+    <% end %>
+  </ul>
+</div>

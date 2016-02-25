@@ -20,11 +20,14 @@ class UsersController < ApplicationController
       redirect_to signin_path
     else
       @user_events = Event.where(["creator_id = ?", current_user.id])
-                          .order(date: :desc)
-                          .paginate(page: params[:page], per_page: 3)
-
+      @previous_events = current_user.previous.order(date: :desc)
+                                     .paginate(page: params[:page], per_page: 3)
+      @upcoming_events = current_user.upcoming.order(date: :desc)
+                                     .paginate(page: params[:page], per_page: 3)
     end
   end
+
+
 
   private
 

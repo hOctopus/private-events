@@ -4,12 +4,12 @@ class Event < ActiveRecord::Base
   has_many :invites, foreign_key: 'attended_events_id'
   has_many :attendees, through: :invites
 
-  def self.past
-    Event.where(["date < ?", Date.today])
-  end
+  scope :past, -> { where(["date < ?", Date.today]) }
+  scope :future, -> { where(["date >= ?", Date.today]) }
+
 
   def self.future
-    Event.where(["date >= ?", Date.today])
+   self.where(["date > ?", Date.today])
   end
 
   def attended?(user)

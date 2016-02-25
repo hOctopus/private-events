@@ -1,2 +1,27 @@
-<h1>Events#show</h1>
-<p>Find me in app/views/events/show.html.erb</p>
+<% event = @event %>
+<h2><%= event.title %></h2>
+<ul>
+  <li>Date: <%= event.date %></li>
+  <li>Location: <%= event.location %></li>
+  <li>Description: <%= event.description %></li>
+  <li>Created by: <%= event.creator.name %></li>
+</ul>
+<% if @guest_list.include?(current_user) %>
+  <h3>Attendees:</h3>
+  <ul>
+    <% @guest_list.each do |guest| %>
+      <li><%= guest.name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <% unless past?(event) %>
+    <strong>Attend this event?</strong>
+    <%= form_tag(url_for(controller: "events", action: "attending"),
+                        method: "post") do %>
+      <%= hidden_field_tag 'event_id', event.id %>
+      <%= submit_tag "RSVP" %>
+    <% end %>
+  <% else %>
+    <h4>No one attended this event.</h4>
+  <% end %>
+<% end %>

@@ -2,12 +2,13 @@
   <h1>Past Events</h1>
   <% @past_events.each do |event| %>
     <ul>
-      <li>Title: <%= event.title %>
+      <li>Title: <%= event.title %></li>
       <li>Date: <%= event.date %></li>
       <li>Location: <%= event.location %></li>
       <li>Description: <%= event.description %></li>
       <li>Created by: <%= event.creator.name %></li>
       <li>Attended: <%= event.attended?(current_user) ? "Yes" : "No" %></li>
+      <li><%= link_to "Details", event %>
     </ul>
   <% end %>
   <%= will_paginate @past_events %>
@@ -28,17 +29,18 @@
           <%= form_tag(url_for(controller: "events", action: "declining"),
                               method: "post") do %>
             <%= hidden_field_tag 'event_id', event.id %>
-            <%= submit_tag "OK", data: { confirm: "Are you sure?" } %>
+            <%= submit_tag "Send my regards", data: { confirm: "Are you sure?" } %>
           <% end %>
         <% else %>
-          Attend this event?
-         <%= form_tag(url_for(controller: "events", action: "attending"),
+          <strong>Attend this event?</strong>
+          <%= form_tag(url_for(controller: "events", action: "attending"),
                               method: "post") do %>
             <%= hidden_field_tag 'event_id', event.id %>
-            <%= submit_tag "OK" %>
+            <%= submit_tag "RSVP" %>
           <% end %>
         <% end %>
       </li>
+      <li><%= link_to "Details", event %>
     </ul>
   <% end %>
   <%= will_paginate @future_events %>

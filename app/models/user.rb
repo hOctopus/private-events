@@ -24,8 +24,10 @@ class User < ActiveRecord::Base
   end
 
   def previous
+    self.attended_events.past
   end
 
   def upcoming
+    self.attended_events.future
   end
 end
